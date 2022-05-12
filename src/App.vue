@@ -15,6 +15,10 @@ export default {
   components: {
     Header,
     Footer,
+  },
+  mounted() {
+    // 派发action
+    this.$store.dispatch('getCategoryList')
   }
 }
 </script>

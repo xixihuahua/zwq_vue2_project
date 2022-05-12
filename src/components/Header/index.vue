@@ -28,17 +28,18 @@
     <div class="bottom">
       <h1 class="logoArea">
         <router-link class="logo" title="尚品汇" to="/home">
-          <img src="./images/logo.png" alt="" />
+          <img src="./images/logo.png" alt=""/>
         </router-link>
       </h1>
       <div class="searchArea">
         <form action="###" class="searchForm">
           <input
-            type="text"
-            id="autocomplete"
-            class="input-error input-xxlarge"
+              v-model="keyword"
+              type="text"
+              id="autocomplete"
+              class="input-error input-xxlarge"
           />
-          <button class="sui-btn btn-xlarge btn-danger" type="button">
+          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
             搜索
           </button>
         </form>
@@ -50,6 +51,24 @@
 <script>
 export default {
   name: 'Header',
+  data() {
+    return {
+      keyword: null,
+    }
+  },
+  methods: {
+    goSearch: function () {
+      let location = {
+        name: 'search',
+        params: {keyword: this.keyword || undefined},
+      }
+      // 参数合并
+      if(this.$route.query){
+        location.query = this.$route.query;
+      }
+      this.$router.push(location)
+    }
+  }
 };
 </script>
 

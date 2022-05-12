@@ -4,10 +4,10 @@
     <div class="sortList clearfix">
       <div class="center">
         <!--banner轮播-->
-        <div class="swiper-container" id="mySwiper">
+        <div class="swiper-container" ref="mySwiper">
           <div class="swiper-wrapper">
-            <div class="swiper-slide">
-              <img src="./images/banner1.jpg" />
+            <div class="swiper-slide" v-for="carousel in bannerList" :key="carousel.id">
+              <img :src="carousel.imgUrl"/>
             </div>
           </div>
           <!-- 如果需要分页器 -->
@@ -94,7 +94,7 @@
           </li>
         </ul>
         <div class="ads">
-          <img src="./images/ad1.png" />
+          <img src="./images/ad1.png"/>
         </div>
       </div>
     </div>
@@ -102,8 +102,38 @@
 </template>
 
 <script>
+import {mapState} from "vuex";
+import Swiper from 'swiper';
+
 export default {
-  name: "ListContainer"
+  name: "ListContainer",
+  mounted() {
+    this.$store.dispatch('getBannerList');
+  },
+  computed: {
+    ...mapState({
+      bannerList: (state) => state.home.bannerList,
+    })
+  },
+  watch: {
+    bannerList: {
+      handler() {
+        this.$nextTick(() => {
+          new Swiper(this.$refs.mySwiper, {
+            loop: true,
+            pagination: {
+              el: '.swiper-pagination',
+              clickable: true,
+            },
+            navigation: {
+              nextEl: '.swiper-button-next',
+              prevEl: '.swiper-button-prev',
+            },
+          })
+        })
+      }
+    }
+  }
 }
 </script>
 
