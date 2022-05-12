@@ -6,3 +6,6 @@ export const reqgetCategoryList = () => requests.get(`/product/getBaseCategoryLi
 
 // 获取首页banner
 export const reqGetBannerList = () => mockRequests.get('/banner');
+
+// 获取floor数据
+export const reqGetFloorList = () => mockRequests.get('/floor');

@@ -1,10 +1,11 @@
-import {reqgetCategoryList, reqGetBannerList} from "@/api";
+import {reqgetCategoryList, reqGetBannerList, reqGetFloorList} from "@/api";
 //home模块的仓库
 const state = {
     //home仓库中存储三级菜单的数据
     categoryList: [],
     // 轮播图数据
     bannerList: [],
+    floorList:[],
 };
 //mutions是唯一修改state的地方
 const mutations = {
@@ -13,6 +14,9 @@ const mutations = {
     },
     GETBANNERLIST(state, bannerList) {
         state.bannerList = bannerList;
+    },
+    GETFLOORLIST(state, floorList) {
+        state.floorList = floorList;
     },
 };
 //action|用户处理派发action地方的，可以书写异步语句、自己逻辑地方
@@ -29,6 +33,12 @@ const actions = {
         let result = await reqGetBannerList();
         if (result.code === 200) {
             commit("GETBANNERLIST", result.data);
+        }
+    },
+    async getFloorList({commit}) {
+        let result = await reqGetFloorList();
+        if (result.code === 200) {
+            commit("GETFLOORLIST", result.data);
         }
     },
 };

@@ -164,7 +164,7 @@ export default {
       position: absolute;
       background: #fafafa;
       z-index: 999;
-
+      cursor: pointer;
       .all-sort-list2 {
         .cur {
           background: skyblue;
@@ -249,7 +249,7 @@ export default {
       height: 461px;
     }
     .sort-enter-active{
-      transition: all .5s linner;
+      transition: all .5s linear;
     }
   }
 }
