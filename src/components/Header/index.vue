@@ -56,6 +56,11 @@ export default {
       keyword: null,
     }
   },
+  mounted() {
+    this.$bus.$on('clear',()=>{
+      this.keyword = null;
+    })
+  },
   methods: {
     goSearch: function () {
       let location = {
@@ -63,7 +68,7 @@ export default {
         params: {keyword: this.keyword || undefined},
       }
       // 参数合并
-      if(this.$route.query){
+      if (this.$route.query) {
         location.query = this.$route.query;
       }
       this.$router.push(location)

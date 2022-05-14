@@ -13,7 +13,11 @@ requests.interceptors.request.use(config=>{
 
 requests.interceptors.response.use(res=>{
     nprogress.done();
-    return res.data
+    const { data } = res;
+    if(data?.code === 200){
+        return res.data
+    }
+    // alert(`${data.message}`)
 },error=>{
     alert(`服务器响应数据失败:${error}`)
 })
