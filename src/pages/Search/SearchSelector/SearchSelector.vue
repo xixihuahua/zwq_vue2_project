@@ -42,7 +42,7 @@ export default {
       this.$emit('handleTradeMark',trademark);
     },
     clickAttrInfo(attr,attrValue){
-      this.$props.handleAttrInfo(attr,attrValue)
+      this.handleAttrInfo(attr,attrValue)
     },
   }
 }
