@@ -11,42 +11,46 @@
             </li>
           </ul>
           <ul class="fl sui-tag">
-            <li class="with-x" v-if="queryParams.categoryName">{{ queryParams.categoryName }}<i @click="removeCategoryName">×</i></li>
+            <li class="with-x" v-if="queryParams.categoryName">{{ queryParams.categoryName }}<i
+                @click="removeCategoryName">×</i></li>
             <li class="with-x" v-if="queryParams.keyword">{{ queryParams.keyword }}<i @click="removeKeyWord">×</i></li>
-            <li class="with-x" v-if="queryParams.trademark">{{ queryParams.trademark.split(':')[1] }}<i @click="removeTradeMark">×</i></li>
-            <li class="with-x" v-for="(attr,index) in queryParams.props" :key="attr">{{ attr.split(':')[1] }}<i @click="removeAttrInfo(index)">×</i></li>
+            <li class="with-x" v-if="queryParams.trademark">{{ queryParams.trademark.split(':')[1] }}<i
+                @click="removeTradeMark">×</i></li>
+            <li class="with-x" v-for="(attr,index) in queryParams.props" :key="attr">{{ attr.split(':')[1] }}<i
+                @click="removeAttrInfo(index)">×</i></li>
           </ul>
         </div>
 
         <!--选择栏-->
         <SearchSelector @handleTradeMark="handleTradeMark" :handleAttrInfo="handleAttrInfo"/>
 
-        <!--details-->
         <div class="details clearfix">
+          <!--排序-->
           <div class="sui-navbar">
             <div class="navbar-inner filter">
               <ul class="sui-nav">
-                <li class="active">
-                  <a href="#">综合</a>
+                <li :class="{active:isComOrder}" @click="changeOrder('1')">
+                  <a>综合
+                    <span v-show="isComOrder" class="iconfont"
+                          :class="{'icon-xiangxia': !isAsc, 'icon-xiangshang' : isAsc}"></span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">销量</a>
+                <li :class="{active:isSaleOrder}" @click="changeOrder('2')">
+                  <a href="#">销量
+                    <span v-show="isSaleOrder" class="iconfont"
+                          :class="{'icon-xiangxia': !isAsc, 'icon-xiangshang' : isAsc}"></span>
+                  </a>
                 </li>
-                <li>
-                  <a href="#">新品</a>
-                </li>
-                <li>
-                  <a href="#">评价</a>
-                </li>
-                <li>
-                  <a href="#">价格⬆</a>
-                </li>
-                <li>
-                  <a href="#">价格⬇</a>
+                <li :class="{active:isPriceOrder}" @click="changeOrder('3')">
+                  <a href="#">价格
+                    <span v-show="isPriceOrder" class="iconfont"
+                          :class="{'icon-xiangxia': !isAsc, 'icon-xiangshang' : isAsc}"></span>
+                  </a>
                 </li>
               </ul>
             </div>
           </div>
+          <!--商品信息-->
           <div class="goods-list">
             <ul class="yui3-g">
               <li class="yui3-u-1-5" v-for="good in goodsList" :key="good.id">
@@ -129,7 +133,7 @@ export default {
         category3Id: '', // 三级分类id
         categoryName: '', // 分类名
         keyword: '', //关键字
-        order: '', // 排序
+        order: '1:des', // 排序(默认为综合降序)
         pageNo: 1,
         pageSize: 10,
         props: [], // 平台售卖属性操作带的参数
@@ -146,7 +150,19 @@ export default {
     this.getSearchList()
   },
   computed: {
-    ...mapGetters(['attrsList', 'goodsList'])
+    ...mapGetters(['attrsList', 'goodsList']),
+    isComOrder() {
+      return this.queryParams.order.indexOf('1') !== -1;
+    },
+    isSaleOrder() {
+      return this.queryParams.order.indexOf('2') !== -1;
+    },
+    isPriceOrder() {
+      return this.queryParams.order.indexOf('3') !== -1;
+    },
+    isAsc() {
+      return this.queryParams.order.indexOf('asc') !== -1;
+    }
   },
   methods: {
     // 查询数据
@@ -176,19 +192,28 @@ export default {
       this.getSearchList();
     },
     // 删除售卖属性
-    removeAttrInfo(index){
-      this.queryParams.props = this.queryParams.props.splice(index,0)
+    removeAttrInfo(index) {
+      this.queryParams.props = this.queryParams.props.splice(index, 0)
+      this.getSearchList();
+    },
+    changeOrder(flag) {
+      const origin = this.queryParams.order.split(':')[0]
+      if (origin === flag) {
+        this.queryParams.order = `${flag}:${this.isAsc ? 'desc' : 'asc'}`;
+      } else {
+        this.queryParams.order = `${flag}:${this.isAsc ? 'asc' : 'desc'}`;
+      }
       this.getSearchList();
     },
     // 点击品牌
-    handleTradeMark(trademark){
+    handleTradeMark(trademark) {
       this.queryParams.trademark = `${trademark.tmId}:${trademark.tmName}`;
       this.getSearchList();
     },
     // 点击售卖属性
-    handleAttrInfo(attr,attrValue){
+    handleAttrInfo(attr, attrValue) {
       const attrInfo = `${attr.attrId}:${attrValue}:${attr.attrName}`;
-      if(!this.queryParams.props?.some(item=> item === attrInfo)){
+      if (!this.queryParams.props?.some(item => item === attrInfo)) {
         this.queryParams.props.push(attrInfo)
         this.getSearchList();
       }
