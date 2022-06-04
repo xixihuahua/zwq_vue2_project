@@ -108,7 +108,7 @@ export default {
     leaveShow: function () {
       this.currentIndex = -1;
       // 查询页才让分类栏隐藏
-      if (this.$route.name === 'search') {
+      if (this.$route.name !== 'home') {
         this.show = false;
       }
     },

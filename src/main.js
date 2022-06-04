@@ -10,8 +10,19 @@ import Carousel from "@/components/Carousel";
 import Pagination from "@/components/Pagination";
 // 引入mockServer.js
 import '@/mock/mockServer';
-
+//引入表单校验插件
+import "@/plugins/validate";
+//统一引入
+import * as API from '@/api';
 import 'swiper/css/swiper.css';
+import { Button,MessageBox} from 'element-ui';
+
+//引入自定义插件
+import myPlugins from '@/plugins/myPlugins';
+Vue.use(myPlugins,{
+    name:'upper'
+});
+
 
 Vue.config.productionTip = false
 
@@ -19,12 +30,18 @@ Vue.config.productionTip = false
 Vue.component(typeNav.name, typeNav);
 Vue.component(Carousel.name, Carousel);
 Vue.component(Pagination.name, Pagination);
-
+//注册全局组件
+Vue.component(Button.name, Button);
+//ElementUI注册组件的时候，还有一种写法，挂在原型上
+Vue.prototype.$msgbox = MessageBox;
+Vue.prototype.$alert = MessageBox.alert;
 new Vue({
   render: h => h(App),
   beforeCreate() {
     // 设置全局事件总线
     Vue.prototype.$bus = this;
+    // 避免每次import接口都挨个引入
+    Vue.prototype.$API = API;
   },
   // 注册路由
   router,

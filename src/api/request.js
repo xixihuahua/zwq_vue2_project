@@ -1,6 +1,6 @@
 import axios from 'axios';
 import nprogress from "nprogress";
-
+import store from '@/store'
 let requests = axios.create({
     baseURL : '/api',
     timeout: 5000,
@@ -8,6 +8,12 @@ let requests = axios.create({
 
 requests.interceptors.request.use(config=>{
     nprogress.start();
+    if (store.state.detail.uuid_token) {
+        config.headers.uesTempId = store.state.detail.uuid_token;
+    }
+    if (store.state.user.token) {
+        config.headers.token = store.state.user.token;
+    }
     return config
 })
 
