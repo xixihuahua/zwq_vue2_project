@@ -1,6 +1,6 @@
-import Home from '@/pages/Home';
 import Register from '@/pages/Register';
-import Search from '@/pages/Search';
+// 路由懒加载
+const Search = () => import('@/pages/Search')
 import Login from '@/pages/Login';
 import Detail from '@/pages/Detail';
 import AddCartSuccess from '@/pages/AddCartSuccess';
@@ -13,8 +13,8 @@ import MyOrder from '@/pages/Center/myOrder';
 import GroupBuy from '@/pages/Center/groupOrder';
 export default [
   {
-    path: '/home',
-    component: Home,
+    path: '/',
+    component: () => import('@/pages/Home')
   },
   {
     path: '/register',

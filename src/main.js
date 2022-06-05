@@ -16,14 +16,20 @@ import "@/plugins/validate";
 import * as API from '@/api';
 import 'swiper/css/swiper.css';
 import { Button,MessageBox} from 'element-ui';
-
+//引入图片懒加载插件
+import VueLazyload from 'vue-lazyload';
+// 引入默认图片
+import atm from '@/assets/1.gif';
+//注册插件
+Vue.use(VueLazyload,{
+  //懒加载默认的图片
+  loading:atm
+});
 //引入自定义插件
 import myPlugins from '@/plugins/myPlugins';
 Vue.use(myPlugins,{
     name:'upper'
 });
-
-
 Vue.config.productionTip = false
 
 //全局组件：第一个参数 组件名字  第二个参数：那个组件
