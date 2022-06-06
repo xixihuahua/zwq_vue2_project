@@ -8,7 +8,7 @@
 
 <script>
 export default {
-  name: "",
+  name: "HintButton",
   props:['title'],
   mounted(){
     //this.$attrs:可以获取到父亲传递的数据【props】

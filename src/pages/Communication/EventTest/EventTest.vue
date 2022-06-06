@@ -3,11 +3,13 @@
     <h1>EventTest组件</h1>
     <!-- 原生DOM事件 -->
     <button @click="handler">原生btn按钮</button>
-    <!-- 使用Event1组件：底下这个组件  @click.native 原生DOM事件，利用事件的委派-->
-    <Event1 @click.native="handler1"></Event1>
+    <!-- 使用Event1组件：底下这个组件
+					@click 会被解析为自定义事件，因为event1是自定义组件，而非原生DOM组件
+					@click.native 原生DOM事件，利用事件的委派 -->
+    <Event1 @click.native="handler1" @click="handler1"></Event1>
     <hr/>
     <!-- 自定义事件对于原生DOM没有任何意义 -->
-    <!-- <button @erha="handler3"> 原生的btn</button> -->
+    <button @erha="handler3"> 原生的btn</button>
     <Event2 @click="handler2" @xxx="handler2"></Event2>
     <!-- 表单元素 color:选取颜色  range：范围条 date：日历 week-->
     <input type="week" />

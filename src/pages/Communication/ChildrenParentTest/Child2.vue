@@ -1,13 +1,12 @@
 <template>
   <div style="background: #ccc; height: 50px;">
-    <h3>女儿小红: 有存款: {{money}}</h3>
-    <button>给BABA钱: 100</button>
+    <h3>C: 有存款: {{money}}</h3>
   </div>
 </template>
 
 <script>
 export default {
-  name: 'Daughter',
+  name: 'Child2',
   data () {
     return {
       money: 20000
