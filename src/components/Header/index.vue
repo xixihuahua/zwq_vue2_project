@@ -4,49 +4,63 @@
     <!-- 头部的第一行 -->
     <div class="top">
       <div class="container">
-        <div class="loginList">
-          <p>尚品汇欢迎您！</p>
-          <p v-if="!userName">
-            <span>请</span>
-            <router-link to="/login">登录</router-link>
-            <router-link to="/register" class="register">免费注册</router-link>
-          </p>
-          <p v-else>
-                <span>{{userName}}</span>
-                <span class="register" @click="logout">退出登录</span>
-          </p>
-        </div>
+
         <div class="typeList">
-          <router-link to="/center/myorder">我的订单</router-link>
-          <router-link to="/shopcart">我的购物车</router-link>
-          <a href="###">我的尚品汇</a>
-          <a href="###">尚品汇会员</a>
-          <a href="###">企业采购</a>
-          <a href="###">关注尚品汇</a>
-          <a href="###">合作招商</a>
-          <a href="###">商家后台</a>
+          <router-link to="/center/myorder" class="label-4">在线客服</router-link>
+          <p class="gap-space"></p>
+          <a href="###" class="label-4">请登录</a>
         </div>
       </div>
     </div>
     <!--头部第二行 搜索区域-->
     <div class="bottom">
-      <h1 class="logoArea">
-        <router-link class="logo" title="尚品汇" to="/home">
-          <img src="./images/logo.png" alt=""/>
+
+      <div class="bottom_left">
+
+        <router-link class="logo" title="adidas" to="/home">
+          <img src="./images/logo.png" alt="" />
         </router-link>
-      </h1>
-      <div class="searchArea">
-        <form action="###" class="searchForm">
-          <input
-              v-model="keyword"
-              type="text"
-              id="autocomplete"
-              class="input-error input-xxlarge"
-          />
-          <button class="sui-btn btn-xlarge btn-danger" type="button" @click="goSearch">
-            搜索
-          </button>
-        </form>
+
+
+        <div class="hotArea">
+<!--          <div class="hfull">男装</div>-->
+<!--          <div class="hfull item">男装</div>-->
+<!--          <div class="hfull item">男装</div>-->
+<!--          <div class="hfull item">男装</div>-->
+<!--          <div class="hfull item">男装</div>-->
+          <el-menu
+<!--              :default-active="activeIndex"-->
+              class="el-menu-demo"
+              mode="horizontal"
+<!--              @select="handleSelect"-->
+          >
+            <el-menu-item index="1">Processing Center</el-menu-item>
+            <el-sub-menu index="2">
+              <template #title>Workspace</template>
+              <el-menu-item index="2-1">item one</el-menu-item>
+              <el-menu-item index="2-2">item two</el-menu-item>
+              <el-menu-item index="2-3">item three</el-menu-item>
+              <el-sub-menu index="2-4">
+                <template #title>item four</template>
+                <el-menu-item index="2-4-1">item one</el-menu-item>
+                <el-menu-item index="2-4-2">item two</el-menu-item>
+                <el-menu-item index="2-4-3">item three</el-menu-item>
+              </el-sub-menu>
+            </el-sub-menu>
+            <el-menu-item index="3" disabled>Info</el-menu-item>
+            <el-menu-item index="4">Orders</el-menu-item>
+          </el-menu>
+        </div>
+      </div>
+      <div class="bottom_right">
+        <div>
+          <div class="search-bar-box ">
+            <i class="search-bar-center-icon"></i>
+
+            <span style="width: 150px;">三叶草上新</span>
+          </div>
+        </div>
+
       </div>
     </div>
   </div>
@@ -57,139 +71,115 @@ export default {
   name: 'Header',
   data() {
     return {
-      keyword: null,
     }
   },
   computed: {
-    userName() {
-      return this.$store.state.user.userInfo.name
-    }
+
   },
   mounted() {
-    this.$bus.$on('clear',()=>{
-      this.keyword = null;
-    })
+
   },
   methods: {
-    goSearch: function () {
-      let location = {
-        name: 'search',
-        params: {keyword: this.keyword || undefined},
-      }
-      // 参数合并
-      if (this.$route.query) {
-        location.query = this.$route.query;
-      }
-      this.$router.push(location)
-    },
-    //退出登录
-    async logout(){
-      //退出登录需要做的事情
-      //1:需要发请求，通知服务器退出登录【清除一些数据：token】
-      //2:清除项目当中的数据【userInfo、token】
-        try {
-          //如果退出成功
-          await this.$store.dispatch('userLogout');
-          //回到首页
-          this.$router.push('/home');
-        } catch (error) {
-          alert('退出登录失败')
-        }
-    }
+
   },
 };
 </script>
 
 <style lang="less" scoped>
 .header {
-  & > .top {
-    background-color: #eaeaea;
-    height: 30px;
-    line-height: 30px;
+  &>.top {
+    padding: 0 calc((100% - 1360px) / 2 - 7px) 0 calc((100% - 1360px) / 2);
+    background-color: #000;
 
     .container {
-      width: 1200px;
-      margin: 0 auto;
-      overflow: hidden;
-
-      .loginList {
-        float: left;
-
-        p {
-          float: left;
-          margin-right: 10px;
-
-          .register {
-            border-left: 1px solid #b3aeae;
-            padding: 0 5px;
-            margin-left: 5px;
-          }
-        }
-      }
+      display: flex;
+      align-content: center;
+      justify-content: end;
 
       .typeList {
-        float: right;
 
-        a {
-          padding: 0 10px;
+        height: 40px;
+        line-height: 40px;
+        display: flex;
+        align-items: center;
 
-          & + a {
-            border-left: 1px solid #b3aeae;
-          }
+        .label-4 {
+          font-size: 13px;
+          line-height: 18px;
+          font-weight: 400;
+          letter-spacing: .5px;
+          font-family: AdihausDIN, PingFang SC, sans-serif;
+          font-style: normal;
+          color: #ffffff;
+        }
+
+        .gap-space {
+          width: 31px;
+          position: relative;
+          color: #ffffff;
+        }
+
+        .gap-space::after {
+          content: " ";
+          width: 1px;
+          height: 20px;
+          position: absolute;
+          top: -10px;
+          left: 14px;
+          transform: scaleX(0.5);
+          background-color: #ffffff
         }
       }
+
+
     }
   }
 
-  & > .bottom {
-    width: 1200px;
-    margin: 0 auto;
-    overflow: hidden;
+  &>.bottom {
+    padding: 0 calc((100% - 1360px) / 2);
+    height: 84px;
+    display: flex;
+    justify-content: space-between;
 
-    .logoArea {
-      float: left;
+    .bottom_left {
+      display: flex;
+      align-items: center;
 
       .logo {
+        height: 100%;
         img {
-          width: 175px;
-          margin: 25px 45px;
+          width: 84px;
+        }
+      }
+
+      .hotArea {
+        display: flex;
+        align-items: center;
+
+        .hfull {
+          font-size: 15px;
+          line-height: 20px;
+          font-weight: 700;
+          letter-spacing: .5px;
+          font-family: AdihausDIN, PingFang SC, sans-serif;
+          font-style: normal;
+          color: #000;
+        }
+
+        .item {
+          white-space: nowrap;
+          margin-left: 20px;
+          user-select: none;
         }
       }
     }
 
-    .searchArea {
-      float: right;
-      margin-top: 35px;
-
-      .searchForm {
+    .bottom_right {
+      .search-bar-box {
         overflow: hidden;
-
-        input {
-          box-sizing: border-box;
-          width: 490px;
-          height: 32px;
-          padding: 0px 4px;
-          border: 2px solid #ea4a36;
-          float: left;
-
-          &:focus {
-            outline: none;
-          }
-        }
-
-        button {
-          height: 32px;
-          width: 68px;
-          background-color: #ea4a36;
-          border: none;
-          color: #fff;
-          float: left;
-          cursor: pointer;
-
-          &:focus {
-            outline: none;
-          }
-        }
+        height: 32px;
+        flex: 1;
+        background: #F9F9F9;
       }
     }
   }

@@ -64,11 +64,12 @@ export default {
     return {
       currentIndex: -1, //当前这个属性决定了到底那个h3身上有类名
       show: true,
+      isHome: ['/','/home'].includes(this.$route.path)
     };
   },
   mounted() {
     // 判断分类栏是否展示
-    if (this.$route.path !== '/home') {
+    if (!this.isHome) {
       this.show = false;
     }
   },
@@ -108,7 +109,7 @@ export default {
     leaveShow: function () {
       this.currentIndex = -1;
       // 查询页才让分类栏隐藏
-      if (this.$route.name !== 'home') {
+      if (!this.isHome) {
         this.show = false;
       }
     },
